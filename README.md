@@ -18,6 +18,8 @@ ST depression induced by exercise relative to rest
 Slope of the peak exercise ST segment
 Number of major vessels (0-3) colored by fluoroscopy
 Thalassemia (3 = normal; 6 = fixed defect; 7 = reversible defect)
+
+
 Further details :
 Ramita V
 ramita.v2022ai-ml@sece.ac.in
