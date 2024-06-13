@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prediction Result</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: url('https://siddharth7997.github.io/HeartDiseaseStudy/heart.gif') no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .result-container {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        text-align: center;
+    }
+    .result {
+        margin-top: 20px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .result.positive {
+        color: red;
+    }
+    .result.negative {
+        color: green;
+    }
+    .info {
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+<div class="result-container">
+    <h2>Prediction Result</h2>
+    <div class="result {{ 'positive' if result == 'Heart disease detected' else 'negative' }}">{{ result }}</div>
+    <div class="info">
+        {% if result == 'Heart disease detected' %}
+            <p>Please consult with your healthcare provider for further evaluation and treatment.</p>
+            <p>Consider lifestyle changes such as a balanced diet, regular exercise, and quitting smoking.</p>
+        {% else %}
+            <p>No heart disease detected. Keep maintaining a healthy lifestyle.</p>
+            <p>Regular check-ups and a healthy diet are still recommended.</p>
+        {% endif %}
+    </div>
+
+</div>
+</body>
+</html>

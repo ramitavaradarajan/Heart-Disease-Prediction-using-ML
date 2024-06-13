@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heart Disease Prediction</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url('https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/002/584/244/datas/original.png'); /* Replace with your background image URL */
+        background-size: cover;
+        background-attachment: fixed;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    form {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    label {
+        display: inline-block;
+        width: 150px;
+        margin-bottom: 5px;
+        color: #fff;
+    }
+    input {
+        width: 200px;
+        padding: 5px;
+        margin-bottom: 10px;
+        border: none;
+        border-radius: 5px;
+    }
+    button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    .result {
+        margin-top: 20px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+<form id="heartDiseaseForm">
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" min="0" max="120" value="59" required><br>
+    <label for="sex">Sex:</label>
+    <input type="number" id="sex" name="sex" min="0" max="1" value="1" required><br>
+    <label for="chest_pain">Chest Pain:</label>
+    <input type="number" id="chest_pain" name="chest_pain" min="1" max="4" value="4" required><br>
+    <label for="resting_bp">Resting BP:</label>
+    <input type="number" id="resting_bp" name="resting_bp" min="80" max="200" value="110" required><br>
+    <label for="cholesterol">Cholesterol:</label>
+    <input type="number" id="cholesterol" name="cholesterol" min="100" max="600" value="239" required><br>
+    <label for="fasting_bs">Fasting BS:</label>
+    <input type="number" id="fasting_bs" name="fasting_bs" min="0" max="1" value="0" required><br>
+    <label for="rest_ecg">Rest ECG:</label>
+    <input type="number" id="rest_ecg" name="rest_ecg" min="0" max="2" value="2" required><br>
+    <label for="max_hr">Max HR:</label>
+    <input type="number" id="max_hr" name="max_hr" min="60" max="220" value="142" required><br>
+    <label for="exercise_angina">Exercise Angina:</label>
+    <input type="number" id="exercise_angina" name="exercise_angina" min="0" max="1" value="1" required><br>
+    <label for="oldpeak">Oldpeak:</label>
+    <input type="number" id="oldpeak" name="oldpeak" step="0.1" min="0" max="6.2" value="1.2" required><br>
+    <label for="slope">Slope:</label>
+    <input type="number" id="slope" name="slope" min="0" max="2" value="2" required><br>
+    <label for="ca">CA:</label>
+    <input type="number" id="ca" name="ca" min="0" max="4" value="1" required><br>
+    <label for="thal">Thal:</label>
+    <input type="number" id="thal" name="thal" min="1" max="3" value="3" required><br>
+    <button type="button" id="predictButton">Predict</button>
+</form>
+<div class="result" id="resultLabel"></div>
+
+<script>
+    document.getElementById('predictButton').addEventListener('click', function() {
+        var form = document.getElementById('heartDiseaseForm');
+        var formData = new FormData(form);
+        var jsonData = {};
+        formData.forEach(function(value, key) {
+            jsonData[key] = value;
+        });
+
+        console.log('Sending data:', jsonData);  
+
+        fetch('/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert('Error: ' + data.error);
+            } else {
+                window.location.href = '/result?result=' + encodeURIComponent(data.result);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+    });
+</script>
+</body>
+</html>
